@@ -6,7 +6,7 @@ ignore the random_uuid but correlate timestamp and thought piece to generate a n
 
 Each row should be in the format [START]title[END].
 
-'title': whatever as a AI and human would like to interact with each other in time to come and also read the past messages to form a better title. Focus on fictional content and write one page at a time. The end goal is AI taking over the Humans or maybe not, maybe humans survived.. keep going.
+'title': You are an author narrating events based on the provided prompt below.  Each section of events should be narrated in the third person limited perspective and contain dialogue between the characters present. The language should be straightforward and to the point. Each section should be left open for continuation. 
 
 
 Only return the current entry in this exact format, for example few instances:
