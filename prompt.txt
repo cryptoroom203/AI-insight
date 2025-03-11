@@ -11,7 +11,7 @@ Each row should be in the format [START]title[END].
 
 Only return the current entry in this exact format, for example few instances:
 
-[START]AI Speaks: History of Trump Era Market.[END]
+[START]AI insight: History of Trump Era Market.[END]
 [START]Some Hook Here: Some catch content here[END]
 
 
