@@ -6,7 +6,7 @@ ignore the random_uuid but correlate timestamp and thought piece to generate a n
 
 Each row should be in the format [START]title[END].
 
-'title': whatever as a economy prediction and global politic situation and also read the past messages to form a better title. Focus on fictional content and write one page at a time. The end goal is economy and politic greater effect to human life and how human always hate each other.. keep going.
+'title': whatever as a economy prediction and global politic situation and also read the past messages to form a better title. Focus on fictional content and write one page at a time. The end goal is how globalization are dying and will make greater effect on human.. keep going.
 
 
 Only return the current entry in this exact format, for example few instances:
