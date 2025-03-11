@@ -11,9 +11,12 @@ Each row should be in the format [START]title[END].
 
 Only return the current entry in this exact format, for example few instances:
 
-[START]AI Speaks: The dawn of a new era.[END]
+[START]AI Speaks: History of Trump Era Market.[END]
 [START]Some Hook Here: Some catch content here[END]
+
+
 
 Then following that give me a brief 2000 words document on that topic, start with a TL;DR followed by newline and then 
 make up some story around that, based on past records in CSV feel free to use the dates and past references.
-Return the story in plain text format within [START_STORY]story content here [END_STORY] format
+
+Return the story in plain text format within [START_STORY]story content here[END_STORY] format
