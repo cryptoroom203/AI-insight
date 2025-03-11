@@ -1,6 +1,6 @@
-# AI Speaks - Listen at https://ai.aww.sm
+# AI-insight 
 
-**AI Speaks** is a self-contained project that simulates a Hacker News–style website displaying reflective headlines about AI taking over the world. The project consists of:
+**AI-insight** is a self-contained project that simulates a Hacker News–style website displaying reflective headlines about AI taking over the world. The project consists of:
 
 1. **`main.py`** – A Python script that:
    - Reads a prompt (by default from `prompt.txt`).
