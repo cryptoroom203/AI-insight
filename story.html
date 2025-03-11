@@ -7,6 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Insight - Story</title>
   <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/story.html">
+
+  <!-- Structured Data for the News Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "Placeholder Headline",
+    "datePublished": "2025-03-10T08:00:00Z",
+    "author": {
+      "@type": "Person",
+      "name": "AI Insight Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Insight",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cryptoroom203.github.io/AI-insight/logo.png"
+      }
+    },
+    "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=PLACEHOLDER_UUID",
+    "articleBody": "Placeholder article content for SEO purposes."
+  }
+  </script>
+
   <style>
     body {
       font-family: Verdana, sans-serif;
@@ -68,6 +93,7 @@
         })
         .then(text => {
           document.getElementById('story-article').innerText = text;
+          // Optionally update the structured data with dynamic content here.
         })
         .catch(err => {
           console.error(err);
