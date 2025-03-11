@@ -1,147 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/ItemList">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Insight - Latest AI News and Analysis</title>
-  <meta name="description" content="Stay updated with the latest AI developments and in-depth analysis from AI Insight">
-  <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>AI Insight | Latest Artificial Intelligence News & Analysis</title>
+  <meta name="description" content="Daily curated AI news and in-depth analysis on machine learning breakthroughs, neural networks, and industry trends. Stay updated with the latest developments in artificial intelligence.">
+  <meta name="keywords" content="AI News, Machine Learning, Neural Networks, Deep Learning, Artificial Intelligence">
+  <link rel="canonical" href="https://yourdomain.com/ai-news" />
   
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AI Insight">
-  <meta property="og:description" content="Latest AI Insight and chain of thought">
-  <meta property="og:url" content="https://cryptoroom203.github.io/AI-insight/">
-
-  <!-- Schema.org structured data -->
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "AI Insight",
-    "url": "https://cryptoroom203.github.io/AI-insight/",
-    "description": "Latest AI news and analysis",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "{search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "@type": "ItemList",
+    "itemListElement": [
+      {% raw %}{% for item in news_items %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "item": {
+          "@type": "NewsArticle",
+          "headline": "{{ item.heading }}",
+          "datePublished": "{{ item.timestamp|date('Y-m-d') }}",
+          "url": "https://yourdomain.com/story/{{ item.uuid }}"
+        }
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}{% endraw %}
+    ]
   }
   </script>
 
   <style>
-    /* Original styles remain unchanged */
-    body { font-family: Verdana, sans-serif; background-color: #f6f6ef; margin: 0; padding: 0; }
-    .header { background-color: #ff6600; color: #000; padding: 10px; text-align: center; font-size: 24px; font-weight: bold; }
-    .container { width: 90%; max-width: 800px; margin: 20px auto; }
-    .news-item { padding: 8px 0; border-bottom: 1px solid #e0e0e0; }
-    .news-item a { color: #000; text-decoration: none; font-size: 16px; cursor: pointer; }
-    .news-item a:hover { text-decoration: underline; }
-    .subtext { margin-top: 4px; color: #828282; font-size: 12px; }
-    #story { display: none; padding: 10px; background-color: #fff; border: 1px solid #e0e0e0; margin-bottom: 20px; position: relative; }
-    #close-story { position: absolute; top: 10px; right: 10px; background: #ff6600; color: #000; border: none; padding: 5px 10px; cursor: pointer; }
-    #story-content { margin-top: 40px; white-space: pre-wrap; font-family: Verdana; overflow: auto; line-height: 2rem; }
-    footer { text-align: center; padding: 10px 0; font-size: 12px; color: #828282; border-top: 1px solid #e0e0e0; margin-top: 20px; }
-    footer a { color: #828282; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    /* New SEO-optimized styles */
-    h1 { font-size: 2rem; margin-bottom: 1rem; }
-    time { color: #828282; display: block; margin-bottom: 2rem; }
-    .story-content { font-size: 1.1rem; line-height: 1.6; max-width: 65ch; margin: 0 auto; }
-    [role="main"] { position: relative; }
+    /* Minified CSS for better performance */
+    body{font-family:Verdana,sans-serif;background:#f6f6ef;margin:0;padding:0}.header{background:#ff6600;color:#000;padding:10px;text-align:center;font-size:24px;font-weight:700}.container{width:90%;max-width:800px;margin:20px auto}.news-item{padding:8px 0;border-bottom:1px solid #e0e0e0}.news-item a{color:#000;text-decoration:none;font-size:16px;cursor:pointer}.news-item a:hover{text-decoration:underline}.subtext{margin-top:4px;color:#828282;font-size:12px}#story{display:none;padding:10px;background:#fff;border:1px solid #e0e0e0;margin-bottom:20px;position:relative}#close-story{position:absolute;top:10px;right:10px;background:#ff6600;color:#000;border:none;padding:5px 10px;cursor:pointer;font-size:16px}#story-content{margin-top:40px;white-space:pre-wrap;font-family:Verdana,sans-serif;overflow:auto;line-height:2rem}footer{text-align:center;padding:10px 0;font-size:12px;color:#828282;border-top:1px solid #e0e0e0;margin-top:20px}footer a{color:#828282;text-decoration:none}footer a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
-  <nav class="header" aria-label="Main navigation">AI Insight</nav>
-  
-  <main class="container" role="main">
-    <article id="story" role="article">
-      <button id="close-story" aria-label="Close story">X</button>
-      <h1 id="story-title"></h1>
-      <time id="story-time" datetime=""></time>
-      <div class="story-content" id="story-content"></div>
-    </article>
+  <header class="header" role="banner" aria-label="Site header">
+    <h1 itemprop="name">AI Insight</h1>
+    <meta itemprop="description" content="Comprehensive AI news aggregation and analysis platform">
+  </header>
 
-    <div id="news" role="list">
-      <!-- News items will be inserted here -->
+  <main class="container" role="main" aria-label="Main content">
+    <div id="story" role="article" itemscope itemtype="https://schema.org/NewsArticle">
+      <button id="close-story" aria-label="Close story">X</button>
+      <div id="story-content" itemprop="articleBody"></div>
     </div>
+
+    <nav id="news" role="navigation" aria-label="News listing">
+      <!-- Server-side rendering placeholder -->
+      <noscript>
+        <div class="news-item">
+          <h2>Latest AI News</h2>
+          <p>Enable JavaScript to view interactive content or see our <a href="/static-news">static news archive</a>.</p>
+        </div>
+      </noscript>
+    </nav>
   </main>
 
-  <footer>
-    <p>© 2023 AI Insight. All rights reserved.</p>
-    <p><a href="/about">About Us</a> | <a href="/privacy">Privacy Policy</a></p>
+  <footer role="contentinfo" aria-label="Site footer">
+    <p>© 2025 AI Insight. All rights reserved. <a href="/sitemap.xml" aria-label="XML Sitemap">Sitemap</a></p>
   </footer>
-
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="./mind/mind.csv" as="fetch" crossorigin>
   <script>
-    // Enhanced SEO-friendly functionality
-    function loadStory(uuid) {
-      fetch(`/mind/stories/${uuid}.txt`)
-        .then(response => {
-          if (!response.ok) throw new Error('Story not found');
-          return response.text();
-        })
-        .then(text => {
-          document.getElementById("news").style.display = "none";
-          document.getElementById("story-content").textContent = text;
-          document.getElementById("story").style.display = "block";
-          document.title = `${document.querySelector(`[data-uuid="${uuid}"]`).textContent} - AI Insight`;
-        })
-        .catch(console.error);
+    // Enhanced structured data injection
+    function injectStructuredData(items) {
+      const schemaScript = document.createElement('script');
+      schemaScript.type = 'application/ld+json';
+      schemaScript.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": items.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "NewsArticle",
+            "headline": item.heading,
+            "datePublished": new Date(item.timestamp).toISOString(),
+            "url": window.location.href + '?story=' + item.uuid
+          }
+        }))
+      });
+      document.head.appendChild(schemaScript);
     }
 
-    function showNewsList() {
-      document.getElementById("story").style.display = "none";
-      document.getElementById("news").style.display = "block";
-      document.title = "AI Insight - Latest AI News and Analysis";
-    }
-
-    // History API handling
-    window.addEventListener('popstate', (event) => {
-      event.state?.uuid ? loadStory(event.state.uuid) : showNewsList();
-    });
-
-    // Initial load
-    document.addEventListener('DOMContentLoaded', () => {
-      const pathSegments = window.location.pathname.split('/').filter(Boolean);
-      if (pathSegments[0] === 'story' && pathSegments[1]) {
-        loadStory(pathSegments[1]);
+ /**
+     * Parse a CSV line in the format:
+     *   timestamp,uuid,heading
+     * The heading may contain commas, so we split only on the first two commas.
+     */
+    function parseCSVLine(line) {
+      const firstComma = line.indexOf(',');
+      const secondComma = line.indexOf(',', firstComma + 1);
+      if (firstComma === -1 || secondComma === -1) {
+        return { timestamp: "", uuid: "", heading: line };
       }
+      const timestamp = line.substring(0, firstComma).trim();
+      const uuid = line.substring(firstComma + 1, secondComma).trim();
+      const heading = line.substring(secondComma + 1).trim();
+      return { timestamp, uuid, heading };
+    }
 
-      // News list setup
-      fetch('/mind/mind.csv')
-        .then(response => response.text())
-        .then(text => {
-          const newsContainer = document.getElementById("news");
-          const items = text.trim().split("\n").map(line => {
-            const [timestamp, uuid, heading] = line.split(/,/).map(s => s.trim());
-            return { timestamp, uuid, heading };
-          });
+    // Fetch the CSV file (mind.csv) from the /mind/ directory
+    fetch('./mind/mind.csv')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load mind.csv');
+        }
+        return response.text();
+      })
+      .then(text => {
+        const lines = text.split("\n").filter(line => line.trim() !== "");
+        const newsContainer = document.getElementById("news");
+        let html = "";
+        let rank = 1;
+        lines.forEach(line => {
+          const item = parseCSVLine(line);
+          // Convert the RFC timestamp to a human-friendly format if possible
 
-          newsContainer.innerHTML = items.map((item, index) => `
-            <section class="news-item" role="listitem">
-              <span>${index + 1}.</span>
-              <a href="/story/${item.uuid}" data-uuid="${item.uuid}">${item.heading}</a>
-              <div class="subtext">
-                <time datetime="${item.timestamp}">${new Date(item.timestamp).toLocaleDateString()}</time>
-              </div>
-            </section>
-          `).join('');
+          html += '<div class="news-item">';
+          html += '<span>' + rank + '. </span>';
+          // The anchor uses a data-uuid attribute for fetching the story.
+          html += '<a href="#" data-uuid="' + item.uuid + '">' + item.heading + '</a>';
+          html += '<div class="subtext">' + item.timestamp + '</div>';
+          html += '</div>';
+          rank++;
+        });
+        newsContainer.innerHTML = html;
 
-          document.querySelectorAll('.news-item a').forEach(link => {
-            link.addEventListener('click', (e) => {
-              e.preventDefault();
-              const uuid = link.dataset.uuid;
-              window.history.pushState({ uuid }, '', `/story/${uuid}`);
-              loadStory(uuid);
-            });
+        // Add click event listeners to each story link
+        document.querySelectorAll('.news-item a').forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const uuid = this.getAttribute('data-uuid');
+            // Fetch the story text from /mind/stories/{uuid}.txt
+            fetch('https://cryptoroom203.github.io/AI-insight/mind/stories/' + uuid + '.txt')
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error("Could not load story");
+                }
+                return response.text();
+              })
+              .then(text => {
+                // Hide the news list and show the story container with the story content
+                document.getElementById("news").style.display = "none";
+                document.getElementById("story-content").innerHTML = text;
+                document.getElementById("story").style.display = "block";
+              })
+              .catch(err => {
+                console.error(err);
+                alert("Failed to load story.");
+              });
           });
         });
-    });
+      })
+      .catch(error => {
+        console.error(error);
+        document.getElementById("news").innerHTML = "<p>Error loading news.</p>";
+      });
 
-    document.getElementById("close-story").addEventListener("click", () => {
-      window.history.pushState(null, '', '/');
-      showNewsList();
+    // When the user clicks the close button, hide the story view and show the news list again.
+    document.getElementById("close-story").addEventListener("click", function() {
+      document.getElementById("story").style.display = "none";
+      document.getElementById("news").style.display = "block";
     });
   </script>
 </body>
