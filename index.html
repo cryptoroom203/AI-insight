@@ -7,6 +7,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Insight - Latest News and Stories</title>
   <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "NewsArticle",
+          "headline": "Headline Example 1",
+          "datePublished": "2025-03-10T08:00:00Z",
+          "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=uuid-example-1"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "NewsArticle",
+          "headline": "Headline Example 2",
+          "datePublished": "2025-03-09T08:00:00Z",
+          "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=uuid-example-2"
+        }
+      }
+    ]
+  }
+  </script>
+
   <style>
     /* Simple Hacker News–like styling */
     body {
@@ -127,7 +158,7 @@
     }
 
     // Fetch the CSV file (mind.csv) from the /mind/ directory
-    fetch('https://cryptoroom203.github.io/AI-insight/mind/mind.csv')
+    fetch('./mind/mind.csv')
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to load mind.csv');
