@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Read the full story on AI Insight.">
+  <meta name="keywords" content="AI, Insight, Story, News">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Insight - Story</title>
+  <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/story.html">
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+      background-color: #f6f6ef;
+      margin: 0;
+      padding: 20px;
+    }
+    header.header {
+      background-color: #ff6600;
+      color: #000;
+      padding: 10px;
+      text-align: center;
+    }
+    main.content {
+      margin: 20px auto;
+      max-width: 800px;
+      background: #fff;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+    }
+    a {
+      color: #ff6600;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>AI Insight</h1>
+  </header>
+  <main class="content">
+    <article id="story-article">
+      <noscript>
+        <p>JavaScript is disabled. Please enable JavaScript to view the story.</p>
+      </noscript>
+    </article>
+    <p><a href="index.html">Back to News</a></p>
+  </main>
+  <footer style="text-align: center; font-size: 12px; color: #828282; margin-top: 20px;">
+    <p>&copy; 2025 AI Insight. All rights reserved.</p>
+  </footer>
+  <script>
+    // Function to extract query parameters
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+    const uuid = getQueryParam('uuid');
+    if (uuid) {
+      fetch('./mind/stories/' + uuid + '.txt')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Story not found");
+          }
+          return response.text();
+        })
+        .then(text => {
+          document.getElementById('story-article').innerText = text;
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('story-article').innerText = "Error loading story.";
+        });
+    } else {
+      document.getElementById('story-article').innerText = "No story specified.";
+    }
+  </script>
+</body>
+</html>
