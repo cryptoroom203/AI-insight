@@ -11,8 +11,10 @@ Each row should be in the format [START]title[END].
 
 Only return the current entry in this exact format, for example few instances:
 
-[START]AI insight: History of Trump Era Market.[END]
-[START]Some Hook Here: Some catch content here[END]
+[START]AI insight: What We’ve Learned From 150 Years of Stock Market Crashes.[END]
+[START]Economy: Global stock markets register heavy falls as White House tries to talk up Trump tariffs[END]
+[START]US: Will tariffs make the US money? Will prices rise?[END]
+[START]China: Why China isn’t as worried about Trump’s trade war as in 2018[END]
 
 
 the story in plain text format within [START_STORY]story content here[END_STORY] format
