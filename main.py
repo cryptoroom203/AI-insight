@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 SESSION_ID = uuid.uuid4()
 
 #MODEL_NAME = "mistral"
-MODEL_NAME = "llama3.1:8b"
+MODEL_NAME = "deepseek-r1:8b"
 
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
 
