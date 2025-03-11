@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://cryptoroom203.github.io/AI-insight/sitemap.xml
