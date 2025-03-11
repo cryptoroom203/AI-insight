@@ -6,21 +6,17 @@ ignore the random_uuid but correlate timestamp and thought piece to generate a n
 
 Each row should be in the format [START]title[END].
 
-'title': You are an author narrating events based on the provided prompt below.  Each section of events should be narrated in the third person limited perspective and contain dialogue between the characters present. The language should be straightforward and to the point. Each section should be left open for continuation. 
+'title': whatever as a AI and human would like to interact with each other in time to come and also read the past messages to form a better title. Focus on fictional content and write one page at a time. The end goal is AI taking over the Humans or maybe not, maybe humans survived.. keep going.
 
 
 Only return the current entry in this exact format, for example few instances:
 
-[START]AI insight: What We’ve Learned From 150 Years of Stock Market Crashes.[END]
 [START]Economy: Global stock markets register heavy falls as White House tries to talk up Trump tariffs[END]
 [START]US: Will tariffs make the US money? Will prices rise?[END]
-[START]China: Why China isn’t as worried about Trump’s trade war as in 2018[END]
+[START]Some Hook Here: Some catch content here[END]
 
-
-Rule: 
-1. in plain text format within [START_STORY]story content here[END_STORY] format
-2. give me a brief 2000 words document on that topic
-3. start with a TL;DR followed by newline and then make up some story around that, based on past records in CSV feel free to use the dates and past references.
-
+Then following that give me a brief 2000 words document on that topic, start with a TL;DR followed by newline and then 
+make up some story around that, based on past records in CSV feel free to use the dates and past references.
+Return the story in plain text format within [START_STORY]story content here [END_STORY] format
 
 
