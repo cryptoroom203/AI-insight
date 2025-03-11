@@ -45,7 +45,7 @@ jobs:
 
       - name: Pull Model
         run: |
-          curl -X POST http://localhost:11434/api/pull -d '{"name": "qwen2.5:7b"}'
+          curl -X POST http://localhost:11434/api/pull -d '{"name": "mistral"}'
 
       - name: Run Python script to update db.json, design, and index.html
         run: python main.py
