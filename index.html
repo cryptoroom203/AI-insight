@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Insight - Latest News and Stories</title>
   <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/">
+  
   <style>
-    /* Simple Hacker News–like styling */
+    /* Base styles */
     body {
       font-family: Verdana, sans-serif;
       background-color: #f6f6ef;
@@ -67,7 +68,6 @@
     #story-content {
       margin-top: 40px;
       white-space: pre-wrap;
-      font-family: Verdana, sans-serif;
       overflow: auto;
       line-height: 2rem;
     }
@@ -100,119 +100,135 @@
     </section>
     <!-- News list container -->
     <section id="news">
-      <!-- Noscript fallback for users with JavaScript disabled -->
       <noscript>
-        <p>JavaScript is disabled. Please enable JavaScript or visit our <a href="mind/static-news.html">static news page</a> for the latest updates.</p>
+        <p>
+          JavaScript is disabled. Please enable JavaScript or visit our 
+          <a href="mind/static-news.html">static news page</a> for the latest updates.
+        </p>
       </noscript>
     </section>
   </main>
   <footer>
     <p>&copy; 2025 AI Insight. All rights reserved.</p>
   </footer>
-  
+
   <script>
-    /**
-     * Parse a CSV line in the format: timestamp,uuid,heading
-     */
-    function parseCSVLine(line) {
+    // Helper: Parse a CSV line in the format "timestamp,uuid,heading"
+    const parseCSVLine = (line) => {
       const firstComma = line.indexOf(',');
       const secondComma = line.indexOf(',', firstComma + 1);
       if (firstComma === -1 || secondComma === -1) {
         return { timestamp: "", uuid: "", heading: line };
       }
-      const timestamp = line.substring(0, firstComma).trim();
-      const uuid = line.substring(firstComma + 1, secondComma).trim();
-      const heading = line.substring(secondComma + 1).trim();
-      return { timestamp, uuid, heading };
-    }
+      return {
+        timestamp: line.substring(0, firstComma).trim(),
+        uuid: line.substring(firstComma + 1, secondComma).trim(),
+        heading: line.substring(secondComma + 1).trim()
+      };
+    };
 
-    // Fetch the CSV file (mind.csv) from the /mind/ directory
+    // Render news items and build structured data
+    const renderNewsItems = (lines) => {
+      const newsContainer = document.getElementById("news");
+      let html = "";
+      const itemList = [];
+
+      lines.forEach((line, index) => {
+        const { timestamp, uuid, heading } = parseCSVLine(line);
+        const position = index + 1;
+        const storyUrl = `https://cryptoroom203.github.io/AI-insight/story.html?uuid=${uuid}`;
+
+        html += `
+          <div class="news-item">
+            <span>${position}. </span>
+            <a href="story.html?uuid=${uuid}" data-uuid="${uuid}">${heading}</a>
+            <div class="subtext">${timestamp}</div>
+          </div>
+        `;
+        
+        // Add structured data entry for each news item
+        itemList.push({
+          "@type": "ListItem",
+          "position": position,
+          "item": {
+            "@type": "NewsArticle",
+            "headline": heading,
+            "datePublished": timestamp,
+            "url": storyUrl
+          }
+        });
+      });
+
+      newsContainer.innerHTML = html;
+      injectStructuredData(itemList);
+      attachStoryClickEvents();
+    };
+
+    // Inject JSON-LD structured data into the document head
+    const injectStructuredData = (itemList) => {
+      const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": itemList
+      };
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(structuredData, null, 2);
+      document.head.appendChild(script);
+    };
+
+    // Attach click events for each news story link
+    const attachStoryClickEvents = () => {
+      document.querySelectorAll('.news-item a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const uuid = link.getAttribute('data-uuid');
+          loadStory(uuid);
+        });
+      });
+    };
+
+    // Load story content via AJAX and update URL using History API
+    const loadStory = (uuid) => {
+      fetch(`./mind/stories/${uuid}.txt`)
+        .then(response => {
+          if (!response.ok) throw new Error("Could not load story");
+          return response.text();
+        })
+        .then(text => {
+          document.getElementById("news").style.display = "none";
+          document.getElementById("story-content").innerText = text;
+          document.getElementById("story").style.display = "block";
+          history.pushState({ uuid }, '', `story.html?uuid=${uuid}`);
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Failed to load story.");
+        });
+    };
+
+    // Close story view and return to news list
+    document.getElementById("close-story").addEventListener("click", () => {
+      document.getElementById("story").style.display = "none";
+      document.getElementById("news").style.display = "block";
+      history.pushState({}, '', './');
+    });
+
+    // Fetch mind.csv and initialize the news list
     fetch('./mind/mind.csv')
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to load mind.csv');
-        }
+        if (!response.ok) throw new Error('Failed to load mind.csv');
         return response.text();
       })
       .then(text => {
         const lines = text.split("\n").filter(line => line.trim() !== "");
-        const newsContainer = document.getElementById("news");
-        let html = "";
-        let itemList = []; // To build structured data
-
-        lines.forEach((line, index) => {
-          const item = parseCSVLine(line);
-          html += '<div class="news-item">';
-          html += '<span>' + (index + 1) + '. </span>';
-          // The link now points to a separate story page for SEO purposes.
-          html += '<a href="story.html?uuid=' + item.uuid + '" data-uuid="' + item.uuid + '">' + item.heading + '</a>';
-          html += '<div class="subtext">' + item.timestamp + '</div>';
-          html += '</div>';
-
-          // Build structured data entry
-          itemList.push({
-            "@type": "ListItem",
-            "position": index + 1,
-            "item": {
-              "@type": "NewsArticle",
-              "headline": item.heading,
-              "datePublished": item.timestamp,
-              "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=" + item.uuid
-            }
-          });
-        });
-
-        newsContainer.innerHTML = html;
-
-        // Inject dynamically generated JSON‑LD structured data into the head
-        const structuredData = {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          "itemListElement": itemList
-        };
-
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.text = JSON.stringify(structuredData);
-        document.head.appendChild(script);
-
-        // Add click event listeners to load stories via AJAX (for users with JS enabled)
-        document.querySelectorAll('.news-item a').forEach(link => {
-          link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const uuid = this.getAttribute('data-uuid');
-            fetch('./mind/stories/' + uuid + '.txt')
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error("Could not load story");
-                }
-                return response.text();
-              })
-              .then(text => {
-                document.getElementById("news").style.display = "none";
-                document.getElementById("story-content").innerText = text;
-                document.getElementById("story").style.display = "block";
-                // Update the URL so that the story is bookmarkable
-                history.pushState({uuid: uuid}, '', 'story.html?uuid=' + uuid);
-              })
-              .catch(err => {
-                console.error(err);
-                alert("Failed to load story.");
-              });
-          });
-        });
+        renderNewsItems(lines);
       })
       .catch(error => {
         console.error(error);
         document.getElementById("news").innerHTML = "<p>Error loading news.</p>";
       });
-
-    // Event listener to close the story view and return to the news list
-    document.getElementById("close-story").addEventListener("click", function() {
-      document.getElementById("story").style.display = "none";
-      document.getElementById("news").style.display = "block";
-      history.pushState({}, '', './');
-    });
   </script>
 </body>
 </html>
