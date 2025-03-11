@@ -7,31 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Insight - Story</title>
   <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/story.html">
-
-  <!-- Structured Data for the News Article -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    "headline": "Placeholder Headline",
-    "datePublished": "2025-03-10T08:00:00Z",
-    "author": {
-      "@type": "Person",
-      "name": "AI Insight Team"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "AI Insight",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://cryptoroom203.github.io/AI-insight/logo.png"
-      }
-    },
-    "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=PLACEHOLDER_UUID",
-    "articleBody": "Placeholder article content for SEO purposes."
-  }
-  </script>
-
   <style>
     body {
       font-family: Verdana, sans-serif;
@@ -59,6 +34,12 @@
     a:hover {
       text-decoration: underline;
     }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #828282;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -73,15 +54,17 @@
     </article>
     <p><a href="index.html">Back to News</a></p>
   </main>
-  <footer style="text-align: center; font-size: 12px; color: #828282; margin-top: 20px;">
+  <footer>
     <p>&copy; 2025 AI Insight. All rights reserved.</p>
   </footer>
+  
   <script>
-    // Function to extract query parameters
+    // Function to extract query parameters from the URL
     function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
     }
+
     const uuid = getQueryParam('uuid');
     if (uuid) {
       fetch('./mind/stories/' + uuid + '.txt')
@@ -92,8 +75,43 @@
           return response.text();
         })
         .then(text => {
+          // Display the story content on the page
           document.getElementById('story-article').innerText = text;
-          // Optionally update the structured data with dynamic content here.
+          
+          // Automatically generate structured data with the fetched story content.
+          // (Update the headline and datePublished if you can pass them dynamically.)
+          const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "NewsArticle",
+            "headline": "Placeholder Headline",  // Optionally update this dynamically
+            "datePublished": "2025-03-10T08:00:00Z", // Optionally update this dynamically
+            "author": {
+              "@type": "Person",
+              "name": "AI Insight Team"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "AI Insight",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://cryptoroom203.github.io/AI-insight/logo.png"
+              }
+            },
+            "url": window.location.href,
+            "articleBody": text
+          };
+          
+          // Remove any existing structured data script (if present)
+          const oldScript = document.getElementById('structured-data');
+          if (oldScript) {
+            oldScript.remove();
+          }
+          // Create a new JSON‑LD script element with the updated data
+          const script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.id = 'structured-data';
+          script.text = JSON.stringify(structuredData);
+          document.head.appendChild(script);
         })
         .catch(err => {
           console.error(err);
