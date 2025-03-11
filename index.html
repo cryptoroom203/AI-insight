@@ -104,7 +104,7 @@
     }
 
     // Fetch the CSV file (mind.csv) from the /mind/ directory
-    fetch('./mind/mind.csv')
+    fetch('https://cryptoroom203.github.io/AI-insight/mind/mind.csv')
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to load mind.csv');
@@ -136,7 +136,7 @@
             e.preventDefault();
             const uuid = this.getAttribute('data-uuid');
             // Fetch the story text from /mind/stories/{uuid}.txt
-            fetch('https://cryptoroom203.github.io/AI-insight/mind/stories/' + uuid + '.txt')
+            fetch('./mind/stories/' + uuid + '.txt')
               .then(response => {
                 if (!response.ok) {
                   throw new Error("Could not load story");
