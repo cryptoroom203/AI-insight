@@ -45,7 +45,7 @@ jobs:
 
       - name: Pull Model
         run: |
-          curl -X POST http://localhost:11434/api/pull -d '{"name": "llama3.1:8b"}'
+          curl -X POST http://localhost:11434/api/pull -d '{"name": "deepseek-r1:8b"}'
 
       - name: Run Python script to update db.json, design, and index.html
         run: python main.py
