@@ -7,37 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Insight - Latest News and Stories</title>
   <link rel="canonical" href="https://cryptoroom203.github.io/AI-insight/">
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "item": {
-          "@type": "NewsArticle",
-          "headline": "Headline Example 1",
-          "datePublished": "2025-03-10T08:00:00Z",
-          "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=uuid-example-1"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "item": {
-          "@type": "NewsArticle",
-          "headline": "Headline Example 2",
-          "datePublished": "2025-03-09T08:00:00Z",
-          "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=uuid-example-2"
-        }
-      }
-    ]
-  }
-  </script>
-
   <style>
     /* Simple Hacker News–like styling */
     body {
@@ -169,18 +138,43 @@
         const lines = text.split("\n").filter(line => line.trim() !== "");
         const newsContainer = document.getElementById("news");
         let html = "";
-        let rank = 1;
-        lines.forEach(line => {
+        let itemList = []; // To build structured data
+
+        lines.forEach((line, index) => {
           const item = parseCSVLine(line);
           html += '<div class="news-item">';
-          html += '<span>' + rank + '. </span>';
+          html += '<span>' + (index + 1) + '. </span>';
           // The link now points to a separate story page for SEO purposes.
           html += '<a href="story.html?uuid=' + item.uuid + '" data-uuid="' + item.uuid + '">' + item.heading + '</a>';
           html += '<div class="subtext">' + item.timestamp + '</div>';
           html += '</div>';
-          rank++;
+
+          // Build structured data entry
+          itemList.push({
+            "@type": "ListItem",
+            "position": index + 1,
+            "item": {
+              "@type": "NewsArticle",
+              "headline": item.heading,
+              "datePublished": item.timestamp,
+              "url": "https://cryptoroom203.github.io/AI-insight/story.html?uuid=" + item.uuid
+            }
+          });
         });
+
         newsContainer.innerHTML = html;
+
+        // Inject dynamically generated JSON‑LD structured data into the head
+        const structuredData = {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "itemListElement": itemList
+        };
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(structuredData);
+        document.head.appendChild(script);
 
         // Add click event listeners to load stories via AJAX (for users with JS enabled)
         document.querySelectorAll('.news-item a').forEach(link => {
